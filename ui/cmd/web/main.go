@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strings"
 
-	"ui/frontend"
+	"ui/resources"
 )
 
 func main() {
@@ -25,7 +25,7 @@ func router() http.Handler {
 	mux.HandleFunc("/", indexHandler)
 
 	// static files
-	staticFS, _ := fs.Sub(frontend.StaticFiles, "dist")
+	staticFS, _ := fs.Sub(resources.StaticFiles, "dist")
 	httpFS := http.FileServer(http.FS(staticFS))
 	mux.Handle("/static/", httpFS)
 
@@ -47,12 +47,12 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.URL.Path == "/favicon.ico" {
-		rawFile, _ := frontend.StaticFiles.ReadFile("dist/favicon.ico")
+		rawFile, _ := resources.StaticFiles.ReadFile("dist/favicon.ico")
 		w.Write(rawFile)
 		return
 	}
 
-	rawFile, _ := frontend.StaticFiles.ReadFile("dist/index.html")
+	rawFile, _ := resources.StaticFiles.ReadFile("dist/index.html")
 	w.Write(rawFile)
 }
 

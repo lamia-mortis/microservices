@@ -4,7 +4,7 @@ import HomeView from "../views/HomeView.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    alias: ['/index.html'],
+    alias: ["/index.html"],
     name: "home",
     component: HomeView,
   },
