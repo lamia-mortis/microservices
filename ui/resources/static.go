@@ -2,5 +2,5 @@ package resources
 
 import "embed"
 
-//go:embed all:dist
+//go:embed dist/*
 var StaticFiles embed.FS
