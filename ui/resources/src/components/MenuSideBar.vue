@@ -31,37 +31,51 @@ a {
   color: white;
   margin-left: auto;
   margin-right: auto;
-  flex-grow: 2;
+  flex-grow: 1;
 }
 
 svg {
   margin: auto;
-  padding-top: 10px;
   flex-grow: 1;
+}
+
+span {
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>
 
 <template>
   <div class="menu-side-bar-container">
-    <nav>
-      <IconItem name="home" />
-      <router-link to="/">Home</router-link>
-    </nav>
-    <nav>
-      <IconItem name="transactions" />
-      <router-link to="/transactions">Transactions</router-link>
-    </nav>
-    <nav>
-      <IconItem name="blog" />
-      <router-link to="/blog">Blog</router-link>
-    </nav>
-    <nav>
-      <IconItem name="aboutPage" />
-      <router-link to="/aboutpage">About us</router-link>
-    </nav>
-    <nav>
-      <IconItem name="location" />
-      <router-link to="/location">Location</router-link>
-    </nav>
+    <router-link to="/">
+      <nav>
+        <IconItem name="home" />
+        <span>Home</span>
+      </nav>
+    </router-link>
+    <router-link to="/transactions">
+      <nav>
+        <IconItem name="transactions" />
+        <span>Transactions</span>
+      </nav>
+    </router-link>
+    <router-link to="/blog">
+      <nav>
+        <IconItem name="blog" />
+        <span>Blog</span>
+      </nav>
+    </router-link>
+    <router-link to="/aboutpage">
+      <nav>
+        <IconItem name="aboutPage" />
+        <span>About us</span>
+      </nav>
+    </router-link>
+    <router-link to="/location">
+      <nav>
+        <IconItem name="location" />
+        <span>Location</span>
+      </nav>
+    </router-link>
   </div>
 </template>
