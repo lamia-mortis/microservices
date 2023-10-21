@@ -5,5 +5,8 @@ protobuf:
 	--grpc-gateway_out=pb --grpc-gateway_opt=paths=source_relative \
 	proto/*.proto
 
+dependencies:
+	go mod tidy	
+
 server:
 	go run cmd/main.go
