@@ -18,7 +18,13 @@ import (
 )
 
 func main() {
-	config, err := util.LoadConfig(".")
+	configPath, found := os.LookupEnv("CONFIG_PATH")
+
+	if !found {
+		configPath = "."
+	}
+	
+	config, err := util.LoadConfig(configPath)
 
 	if err != nil {
 		log.Fatal().Err(err).Msg("cannot load config")

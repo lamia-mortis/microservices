@@ -5,5 +5,5 @@
 Directive should be run from the microservice root folder
 
 ```
-   make dependencies frontend server
+   make frontend server_run
 ```
