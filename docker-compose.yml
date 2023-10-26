@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  ui:
+    build:
+      context: ./ui
+      args:
+        - SERVER_BINARY_FILE=staticServer
+        - FRONTEND_SRC_DIR=resources
+        - WORK_DIR=${WORK_DIR}
+        - TMP_DIR=${TMP_DIR}
+    environment:
+      - SERVER_BINARY_FILE=staticServer
+      - WORK_DIR=${WORK_DIR}
+      - TMP_DIR=${TMP_DIR}
+      - UI_HOST=0.0.0.0
+    restart: always
+    ports:
+      - "8000:80"
+    deploy:
+      mode: replicated
+      replicas: 1
+    volumes:
+      - ${LOCAL_PATH}/ui:${WORK_DIR}
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+      args:
+        - GATEWAY_BINARY_FILE=gateway
+        - WORK_DIR=${WORK_DIR}
+        - TMP_DIR=${TMP_DIR}
+    restart: always
+    ports:
+      - "8080:80"
+      - "50051:50051"
+    deploy:
+      mode: replicated
+      replicas: 1
+    environment:
+      - GATEWAY_BINARY_FILE=gateway
+      - WORK_DIR=${WORK_DIR}
+      - TMP_DIR=${TMP_DIR}
+      - CONFIG_PATH=${WORK_DIR}
+    volumes:
+      - ${LOCAL_PATH}/gateway:${WORK_DIR}

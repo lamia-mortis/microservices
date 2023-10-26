@@ -4,15 +4,22 @@ import (
 	"fmt"
 	"io/fs"
 	"net/http"
+	"os"
 	"strings"
 
 	"ui/resources"
 )
 
 func main() {
+	host, found := os.LookupEnv("UI_HOST")
+
+	if !found {
+		host = "127.0.0.1"
+	}
+
 	srv := &http.Server{
-		Addr:        ":8888",
-		Handler:     router(),
+		Addr:    fmt.Sprintf("%s:80", host),
+		Handler: router(),
 	}
 
 	srv.ListenAndServe()
