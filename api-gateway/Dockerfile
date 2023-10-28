@@ -19,17 +19,14 @@ RUN chmod +x ${WORK_DIR}/${GATEWAY_BINARY_FILE}
 FROM alpine:3.18.4
 
 ARG WORK_DIR=${WORK_DIR}
-ARG TMP_DIR=${TMP_DIR}
 
 RUN mkdir -p ${WORK_DIR}
-RUN mkdir -p ${TMP_DIR}
 
 ARG GATEWAY_BINARY_FILE=${GATEWAY_BINARY_FILE}
 
-COPY --from=builder ${WORK_DIR}/${GATEWAY_BINARY_FILE} ${TMP_DIR}
-COPY --from=builder ${WORK_DIR}/app.env ${TMP_DIR}
-COPY build/entrypoint.sh /
+COPY --from=builder ${WORK_DIR}/${GATEWAY_BINARY_FILE} ${WORK_DIR}
+COPY --from=builder ${WORK_DIR}/app.env ${WORK_DIR}
 
 ENV CONFIG_PATH=${CONFIG_PATH}
 
-ENTRYPOINT ["sh", "entrypoint.sh"]
+CMD [ "/var/www/app/gateway" ]

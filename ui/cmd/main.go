@@ -18,7 +18,7 @@ func main() {
 	}
 
 	srv := &http.Server{
-		Addr:    fmt.Sprintf("%s:80", host),
+		Addr:    fmt.Sprintf("%s:8080", host),
 		Handler: router(),
 	}
 
