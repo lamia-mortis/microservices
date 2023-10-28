@@ -36,19 +36,16 @@ RUN chmod +x ${WORK_DIR}/${SERVER_BINARY_FILE}
 FROM alpine:3.18.4
 
 ARG WORK_DIR=${WORK_DIR}
-ARG TMP_DIR=${TMP_DIR}
 
 RUN mkdir -p ${WORK_DIR}
-RUN mkdir -p ${TMP_DIR}
 
 ARG SERVER_BINARY_FILE=${SERVER_BINARY_FILE}
 ARG FRONTEND_SRC_DIR=${FRONTEND_SRC_DIR}
 
 # using tmp dir to prevent volume owerwriting
-COPY --from=builder ${WORK_DIR}/${SERVER_BINARY_FILE} ${TMP_DIR}
-COPY --from=builder ${WORK_DIR}/${FRONTEND_SRC_DIR}/dist ${TMP_DIR}/${FRONTEND_SRC_DIR}/dist
-COPY build/entrypoint.sh /
+COPY --from=builder ${WORK_DIR}/${SERVER_BINARY_FILE} ${WORK_DIR}
+COPY --from=builder ${WORK_DIR}/${FRONTEND_SRC_DIR}/dist ${WORK_DIR}/${FRONTEND_SRC_DIR}/dist
 
 ENV UI_HOST=${UI_HOST}
 
-ENTRYPOINT ["sh", "entrypoint.sh"]
+CMD [ "/var/www/app/staticServer" ]
