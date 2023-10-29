@@ -29,4 +29,4 @@ COPY --from=builder ${WORK_DIR}/app.env ${WORK_DIR}
 
 ENV CONFIG_PATH=${CONFIG_PATH}
 
-CMD [ "/var/www/app/gateway" ]
+CMD [ "/var/www/app/gatewayApp" ]

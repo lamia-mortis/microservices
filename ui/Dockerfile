@@ -3,8 +3,8 @@ FROM golang:1.21.3 as builder
 
 # installing nvm with node and npm
 ENV NVM_DIR /root/.nvm 
-ENV NVM_VERSION=0.39.5
-ENV NODE_VERSION=18.16.1
+ARG NVM_VERSION=${NVM_VERSION}
+ARG NODE_VERSION=${NODE_VERSION}
 
 RUN mkdir -p ${NVM_DIR}
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v${NVM_VERSION}/install.sh | bash \

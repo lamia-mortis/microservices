@@ -8,9 +8,13 @@ services:
         - SERVER_BINARY_FILE=staticServer
         - FRONTEND_SRC_DIR=resources
         - WORK_DIR=${WORK_DIR}
+        - NVM_VERSION=${NVM_VERSION}
+        - NODE_VERSION=${NODE_VERSION}
     environment:
       - SERVER_BINARY_FILE=staticServer
       - WORK_DIR=${WORK_DIR}
+      - NVM_VERSION=${NVM_VERSION}
+      - NODE_VERSION=${NODE_VERSION}
       - UI_HOST=0.0.0.0
     restart: always
     ports:
@@ -23,7 +27,7 @@ services:
     build:
       context: ./api-gateway
       args:
-        - GATEWAY_BINARY_FILE=gateway
+        - GATEWAY_BINARY_FILE=gatewayApp
         - WORK_DIR=${WORK_DIR}
     restart: always
     ports:
@@ -33,6 +37,6 @@ services:
       mode: replicated
       replicas: 1
     environment:
-      - GATEWAY_BINARY_FILE=gateway
+      - GATEWAY_BINARY_FILE=gatewayApp
       - WORK_DIR=${WORK_DIR}
       - CONFIG_PATH=${WORK_DIR}
