@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ui-service
+  template:
+    metadata:
+      labels:
+        app: ui-service
+    spec:
+      containers:
+      - name: ui-service
+        image: "lamiamortis/ui:1.0"
+        env: 
+          - name: NVM_DIR
+            value: "/root/.nvm"
+          - name: NVM_VERSION
+            value: "0.39.5"
+          - name: NODE_VERSION
+            value: "18.16.1" 
+          - name:  NODE_PATH
+            value: "$(NVM_DIR)/v$(NODE_VERSION)/lib/node_modules"
+          - name: PATH
+            value: $(NVM_DIR)/versions/node/v$(NODE_VERSION)/bin:${PATH}
+          - name: UI_HOST
+            value: "0.0.0.0"
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+          - containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ui-service
+spec:
+  selector:
+    app: ui-service
+  ports:
+    - protocol: TCP
+      name: main-port
+      port: 8080
+      targetPort: 8080
