@@ -12,8 +12,8 @@ k8s_start:
 ## dev environment
 dev_env_setup:
 	cd ui && make frontend_install && go mod tidy
-	cd api-gateway && go mod tidy
-	cd auth-service && go mod tidy
+	cd ../api-gateway && go mod tidy && cp .env.dist .env
+	cd ../auth-service && go mod tidy && cp .env.dist .env
 
 dev_env_up: network postgres
 	make -j3 dev_ui_up dev_gateway_up dev_auth_up
@@ -43,10 +43,17 @@ define postgres =
 		docker start postgres 
 	else 
 		echo "Pulling postgres image and creating container..."
-		docker run --name postgres --network bank-mss -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:14-alpine 
+		docker run -v ./postgres/auth:/var/lib/postgresql/data \
+			--name postgres \
+			--network bank-mss \
+			-p 5432:5432 \
+			-e POSTGRES_USER=root \
+			-e POSTGRES_PASSWORD=secret \
+			-d postgres:14-alpine 
 	fi
 endef
 
 postgres: ; $(value postgres)
 
+.PHONY: postgres
 .ONESHELL:
